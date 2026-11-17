@@ -1,0 +1,593 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --gold: #d9b56d;
+    --light-gold: #f8e6b4;
+    --dark: #100d12;
+    --cream: #fff7e9;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--dark);
+    color: var(--cream);
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+}
+
+.background-glow {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 50% 40%, #39251d 0%, transparent 45%),
+        radial-gradient(circle at 10% 90%, #38231b 0%, transparent 35%),
+        #100d12;
+    z-index: -2;
+}
+
+.particles {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.particle {
+    position: absolute;
+    bottom: -20px;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--light-gold);
+    box-shadow: 0 0 10px var(--gold);
+    animation: sparkleFloat linear infinite;
+    opacity: 0;
+}
+
+@keyframes sparkleFloat {
+    0% {
+        transform: translateY(0) scale(0);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-110vh) scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* OPENING SCREEN */
+
+.opening-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    text-align: center;
+    padding: 30px 20px;
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+.opening-screen.hide {
+    opacity: 0;
+    transform: scale(1.1);
+    pointer-events: none;
+}
+
+.top-label {
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 5px;
+    margin-bottom: 55px;
+    animation: fadeIn 2s ease;
+}
+
+.envelope-container {
+    width: 250px;
+    height: 175px;
+    perspective: 1000px;
+    cursor: pointer;
+    margin-bottom: 45px;
+    filter: drop-shadow(0 15px 30px #0009);
+}
+
+.envelope {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.envelope-back {
+    position: absolute;
+    inset: 0;
+    background: #7b4b37;
+    border: 1px solid var(--gold);
+}
+
+.letter {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    left: 5%;
+    bottom: 0;
+    background: var(--cream);
+    color: #60452d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 1s ease;
+    z-index: 1;
+}
+
+.letter span {
+    font-family: 'Great Vibes', cursive;
+    font-size: 32px;
+}
+
+.letter small {
+    font-size: 8px;
+    letter-spacing: 2px;
+}
+
+.envelope-front {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(140deg, #9d6445, #68402f);
+    clip-path: polygon(0 0, 50% 60%, 100% 0, 100% 100%, 0 100%);
+    z-index: 2;
+}
+
+.envelope-flap {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #b47a53;
+    clip-path: polygon(0 0, 100% 0, 50% 60%);
+    transform-origin: top;
+    transition: transform 0.8s ease;
+    z-index: 4;
+}
+
+.wax-seal {
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 37px;
+    width: 37px;
+    background: #9c2528;
+    border: 2px solid #d7a75c;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: 'Great Vibes', cursive;
+    font-size: 23px;
+    z-index: 5;
+}
+
+.envelope-container.open .envelope-flap {
+    transform: rotateX(180deg);
+    z-index: 0;
+}
+
+.envelope-container.open .letter {
+    transform: translateY(-100px);
+}
+
+.opening-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 6vw, 55px);
+    font-weight: 400;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.opening-subtitle {
+    font-size: 12px;
+    color: #c5ad91;
+    letter-spacing: 1px;
+    margin-bottom: 35px;
+}
+
+.open-button {
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--light-gold);
+    padding: 16px 30px;
+    letter-spacing: 3px;
+    font-size: 10px;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.open-button:hover {
+    background: var(--gold);
+    color: #17100b;
+    box-shadow: 0 0 30px #d9b56d55;
+}
+
+.open-button span {
+    margin-left: 10px;
+}
+
+.bottom-note {
+    position: absolute;
+    bottom: 25px;
+    font-size: 8px;
+    letter-spacing: 4px;
+    color: #927d66;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* MAIN INVITATION */
+
+.invitation {
+    position: relative;
+    width: min(900px, 92%);
+    min-height: 900px;
+    margin: 70px auto;
+    padding: 70px 40px;
+    background:
+        radial-gradient(ellipse at top, #453024, transparent 60%),
+        linear-gradient(145deg, #241a18, #130f12 65%);
+    border: 1px solid #b99454;
+    outline: 1px solid #b9945444;
+    outline-offset: 8px;
+    box-shadow: 0 0 80px #0009, inset 0 0 50px #d9b56d0b;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(60px);
+    transition: all 1.2s ease;
+    overflow: hidden;
+}
+
+.invitation.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.corner-decoration {
+    position: absolute;
+    color: var(--gold);
+    font-size: 28px;
+    opacity: 0.8;
+}
+
+.top-left { top: 18px; left: 22px; }
+.top-right { top: 18px; right: 22px; }
+.bottom-left { bottom: 18px; left: 22px; }
+.bottom-right { bottom: 18px; right: 22px; }
+
+.invitation-content {
+    position: relative;
+    z-index: 2;
+}
+
+.eyebrow {
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    margin-bottom: 20px;
+}
+
+.small-line {
+    height: 1px;
+    width: 55px;
+    margin: auto;
+    background: var(--gold);
+}
+
+.welcome-heading {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(48px, 7vw, 72px);
+    font-weight: 400;
+    color: var(--light-gold);
+    margin-top: 25px;
+    animation: fadeIn 1.5s ease;
+}
+
+.welcome-text {
+    font-size: 10px;
+    letter-spacing: 7px;
+    color: #c5a875;
+    margin-top: 5px;
+}
+
+.birthday-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(55px, 9vw, 100px);
+    font-weight: 500;
+    color: var(--light-gold);
+    margin: 8px 0;
+    text-shadow: 0 5px 25px #d9b56d44;
+}
+
+.birthday-subtitle {
+    color: #c6b49e;
+    font-size: 12px;
+    line-height: 2;
+    letter-spacing: 1px;
+}
+
+.gold-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin: 35px auto;
+    color: var(--gold);
+}
+
+.gold-divider::before,
+.gold-divider::after {
+    content: "";
+    width: 75px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold));
+}
+
+.gold-divider::after {
+    transform: rotate(180deg);
+}
+
+.guest-message {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    color: var(--light-gold);
+    margin-bottom: 15px;
+}
+
+.guest-message span {
+    color: #dcb978;
+    font-style: italic;
+}
+
+.main-message {
+    max-width: 470px;
+    margin: auto;
+    font-size: 12px;
+    line-height: 2.2;
+    color: #c6b49e;
+}
+
+.party-details {
+    max-width: 650px;
+    margin: 55px auto 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid #d9b56d55;
+    border-bottom: 1px solid #d9b56d55;
+    padding: 25px 0;
+}
+
+.detail {
+    padding: 10px;
+}
+
+.detail + .detail {
+    border-left: 1px solid #d9b56d44;
+}
+
+.detail-icon {
+    color: var(--gold);
+    font-size: 25px;
+}
+
+.detail h3 {
+    color: var(--gold);
+    font-size: 9px;
+    letter-spacing: 3px;
+    margin: 12px 0;
+}
+
+.detail p {
+    color: var(--cream);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+}
+
+.closing-heading {
+    font-family: 'Great Vibes', cursive;
+    color: var(--light-gold);
+    font-size: 42px;
+    font-weight: 400;
+}
+
+.closing-text {
+    color: #c6b49e;
+    font-size: 11px;
+    margin-top: 12px;
+    line-height: 2;
+}
+
+.signature {
+    font-family: 'Great Vibes', cursive;
+    color: var(--gold);
+    font-size: 35px;
+    margin-top: 25px;
+}
+
+.footer-text {
+    color: #947d61;
+    font-size: 8px;
+    letter-spacing: 4px;
+    margin-top: 30px;
+}
+
+/* BALLOONS */
+
+.floating-balloons {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.floating-balloons span {
+    position: absolute;
+    font-size: 35px;
+    animation: balloonFloat 5s ease-in-out infinite;
+    opacity: 0.75;
+}
+
+.floating-balloons span:nth-child(1) {
+    left: 5%;
+    top: 15%;
+}
+
+.floating-balloons span:nth-child(2) {
+    right: 6%;
+    top: 25%;
+    animation-delay: 1s;
+}
+
+.floating-balloons span:nth-child(3) {
+    left: 8%;
+    bottom: 15%;
+    animation-delay: 2s;
+}
+
+.floating-balloons span:nth-child(4) {
+    right: 7%;
+    bottom: 20%;
+    animation-delay: 3s;
+}
+
+@keyframes balloonFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(-8deg);
+    }
+    50% {
+        transform: translateY(-25px) rotate(8deg);
+    }
+}
+
+/* CELEBRATE BUTTON */
+
+.confetti-button {
+    position: relative;
+    z-index: 3;
+    margin-top: 45px;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #e8c982, #b48b46);
+    color: #1b130d;
+    border: none;
+    letter-spacing: 2px;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.confetti-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px #d9b56d55;
+}
+
+/* CONFETTI */
+
+.confetti {
+    position: fixed;
+    top: -15px;
+    z-index: 20;
+    pointer-events: none;
+    animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(-10px) rotate(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(110vh) rotate(800deg);
+        opacity: 0;
+    }
+}
+
+/* MOBILE RESPONSIVE */
+
+@media (max-width: 600px) {
+
+    .top-label {
+        font-size: 9px;
+        letter-spacing: 3px;
+    }
+
+    .invitation {
+        width: 88%;
+        padding: 65px 18px;
+        margin: 40px auto;
+        min-height: 800px;
+    }
+
+    .eyebrow {
+        font-size: 8px;
+        letter-spacing: 3px;
+    }
+
+    .birthday-subtitle {
+        font-size: 10px;
+    }
+
+    .party-details {
+        margin-top: 35px;
+    }
+
+    .detail {
+        padding: 8px 3px;
+    }
+
+    .detail h3 {
+        font-size: 8px;
+        letter-spacing: 1px;
+    }
+
+    .detail p {
+        font-size: 14px;
+        overflow-wrap: anywhere;
+    }
+
+    .floating-balloons span {
+        font-size: 23px;
+    }
+
+    .main-message {
+        font-size: 11px;
+    }
+
+    .closing-heading {
+        font-size: 35px;
+    }
+
+    .footer-text {
+        font-size: 7px;
+        letter-spacing: 2px;
+    }
+}
